@@ -159,7 +159,8 @@ pro fits_grid,head,position=position,color=color,xtit=xtit,ytit=ytit,$
               nolonticklevels=nolonticklevels,nolatticklevels=nolatticklevels,$
               hours=hours,translabels=translabels,lontickname=lontickname,$
               lattickname=lattickname,lontitle=lontitle,lattitle=lattitle,$
-              lonlabelsflip=lonlabelsflip,latlabelsflip=latlabelsflip
+              lonlabelsflip=lonlabelsflip,latlabelsflip=latlabelsflip,$
+              lontickformat=lontickformat,lattickformat=lattickformat
 
 ;+
 ;
@@ -436,8 +437,10 @@ if n_elements(latticklevels) eq 0 then latticklevels=latlevels
 
 
 ; Annotations
+if n_elements(lontickformat) gt 0 and n_elements(lontickname) eq 0 then lontickname=strtrim(string(lonticklevels,format=lontickformat),2)
 if n_elements(lontickname) eq 0 then $
   lontickname = stringize(lonticklevels,ndec=1)
+if n_elements(lattickformat) gt 0 and n_elements(lattickname) eq 0 then lattickname=strtrim(string(latticklevels,format=lontickformat),2)
 if n_elements(lattickname) eq 0 then $
   lattickname = stringize(latticklevels,ndec=1)
 
@@ -574,7 +577,7 @@ if not keyword_set(transp) then begin
 
     if keyword_set(lonlabelsflip) then xaxis=1
     if keyword_set(latlabelsflip) then yaxis=1
-
+    
   ; Translabels, LON labels on Y, LAT labels on X
   endif else begin
     xtickn = lattickname[gdlat]
@@ -590,7 +593,6 @@ if not keyword_set(transp) then begin
 
     if keyword_set(lonlabelsflip) then yaxis=1
     if keyword_set(latlabelsflip) then xaxis=1
-
   endelse
   xticks = n_elements(xtickn)-1
   yticks = n_elements(ytickn)-1
@@ -610,7 +612,6 @@ if not keyword_set(transp) then begin
   ; Setup coordinate system
   plot,[0],[0],/nodata,/noerase,xs=1,ys=1,xr=xr,yr=yr,position=position,xminor=1,yminor=1,$
        xtickformat='(A1)',ytickformat='(A1)',xticks=1,yticks=1
-
   ; Use axis to plot the annotations
   AXIS,xaxis=xaxis,xtickname=xtickn,xtickv=xtickv,xminor=1,xticklen=0.0001,xticks=xticks,$
        xtit=xtit,xtickformat=xtickf,color=framecolor,charsize=charsize,xs=1
@@ -762,7 +763,7 @@ endif else begin
 
     if keyword_set(lonlabelsflip) then yaxis=1
     if keyword_set(latlabelsflip) then xaxis=1
-
+    
   ; Translabels, LON labels on X, LAT labels on Y
   endif else begin
     xtickn = lontickname[gdlon]
@@ -778,7 +779,6 @@ endif else begin
 
     if keyword_set(lonlabelsflip) then xaxis=1
     if keyword_set(latlabelsflip) then yaxis=1
-
   endelse
   xticks = n_elements(xtickn)-1
   yticks = n_elements(ytickn)-1
