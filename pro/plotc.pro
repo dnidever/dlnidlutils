@@ -179,7 +179,7 @@ if nz gt 0 then begin
 
       xlog = 1
       minor = 9
-      coldivisions = 0
+      if n_elements(coldivisions) eq 0 then coldivisions = 0
 
       len = strlen(strtrim(long(min),2)) > strlen(strtrim(long(max),2))
       if min lt 1.0 then form = '(G'+strtrim(len+4,2)+'.2)'
