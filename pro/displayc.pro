@@ -18,7 +18,7 @@ pro displayc,im,xarr,yarr,color=color,nx=nx,ny=ny,$
           maskvalue=maskvalue,coltickvalue=coltickvalue,colticknames=colticknames,$
           colxticklen=colxticklen,colright=colright,colvertical=colvertical,$
           colyticklen=colyticklen,maskcolor=maskcolor,notop=notop,top=top,$
-          coltitle=coltitle
+          coltitle=coltitle,bottom=bottom,ncolors=ncolors
 
 ;+
 ;
@@ -284,12 +284,12 @@ if not keyword_set(noplot) then begin
 
     ; Scale of colors
     if keyword_set(avg) then begin
-      bottom=50
+      if n_elements(bottom) eq 0 then bottom=50
       ncolors=200
     endif else begin
-      ; display/imgscl reserves 0 and 255 for annotations
-      bottom=1       ;10
-      ncolors=254    ;245
+      ;; display/imgscl reserves 0 and 255 for annotations
+      if n_elements(bottom) eq 0 then bottom=1    ;; 10
+      if n_elements(ncolors) eq 0 then ncolors=254  ;; 245 
       ;bottom=0       ;10
       ;ncolors=255    ;245
     endelse
